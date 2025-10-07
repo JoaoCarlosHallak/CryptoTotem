@@ -13,7 +13,7 @@
         <module name="EurekaService" />
         <module name="shared-libraries" />
       </profile>
-      <profile name="Annotation profile for WalletService" enabled="true">
+      <profile name="Annotation profile for TransactionFlowService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

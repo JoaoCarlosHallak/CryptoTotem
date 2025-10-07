@@ -2,6 +2,7 @@ package com.hallak.WalletService.services;
 
 import com.hallak.WalletService.entities.Wallet;
 import com.hallak.WalletService.repositories.WalletRepository;
+import com.hallak.shared_libraries.dtos.WalletDTO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

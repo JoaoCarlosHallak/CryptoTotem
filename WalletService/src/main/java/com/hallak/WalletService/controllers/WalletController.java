@@ -1,6 +1,7 @@
 package com.hallak.WalletService.controllers;
 
 import com.hallak.WalletService.services.WalletService;
+import com.hallak.shared_libraries.dtos.WalletDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
