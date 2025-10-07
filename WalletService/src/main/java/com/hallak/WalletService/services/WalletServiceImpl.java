@@ -1,12 +1,11 @@
 package com.hallak.WalletService.services;
 
-import com.hallak.WalletService.dtos.WalletDTO;
 import com.hallak.WalletService.entities.Wallet;
 import com.hallak.WalletService.repositories.WalletRepository;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

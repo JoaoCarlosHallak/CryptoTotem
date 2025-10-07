@@ -7,6 +7,8 @@
         <option value="$PROJECT_DIR$/ConfigService/pom.xml" />
         <option value="$PROJECT_DIR$/EurekaService/pom.xml" />
         <option value="$PROJECT_DIR$/WalletService/pom.xml" />
+        <option value="$PROJECT_DIR$/TransactionFlowService/pom.xml" />
+        <option value="$PROJECT_DIR$/shared-libraries/pom.xml" />
       </list>
     </option>
   </component>
