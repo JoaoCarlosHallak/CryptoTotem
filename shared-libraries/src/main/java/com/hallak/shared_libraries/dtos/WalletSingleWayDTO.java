@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WalletDTO {
+public class WalletSingleWayDTO {
+
 
     private String address;
     private String publicKey;
+    private String privateKey;
     private LocalDateTime createdAt;
 }

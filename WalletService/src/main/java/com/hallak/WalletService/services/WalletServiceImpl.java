@@ -3,6 +3,7 @@ package com.hallak.WalletService.services;
 import com.hallak.WalletService.entities.Wallet;
 import com.hallak.WalletService.repositories.WalletRepository;
 import com.hallak.shared_libraries.dtos.WalletDTO;
+import com.hallak.shared_libraries.dtos.WalletSingleWayDTO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class WalletServiceImpl implements WalletService{
 
 
     @Override
-    public WalletDTO newWallet() {
+    public WalletSingleWayDTO newWallet() {
         String privateKey;
         String publicKey;
         String address;
@@ -40,7 +41,14 @@ public class WalletServiceImpl implements WalletService{
 
         walletRepository.save(new Wallet(address, publicKey, now));
 
-        return new WalletDTO(address, publicKey, privateKey, now);
+        return new WalletSingleWayDTO(address, publicKey, privateKey, now);
 
+    }
+
+    @Override
+    public WalletDTO findByAddress(String address) {
+        return modelMapper.map
+                (walletRepository.findByAddress(address).orElseThrow(() -> new RuntimeException("Wallet not found for the given address")),
+                        WalletDTO.class);
     }
 }

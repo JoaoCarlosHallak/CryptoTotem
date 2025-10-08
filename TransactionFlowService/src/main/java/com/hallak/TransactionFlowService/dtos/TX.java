@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 public class TX {
     private UUID id;
     private String originAddress;
@@ -26,5 +25,9 @@ public class TX {
         this.createdAt = createdAt;
         this.signature = signature;
         this.hash = hash;
+    }
+
+    public TX() {
+        this.id = UUID.randomUUID();
     }
 }

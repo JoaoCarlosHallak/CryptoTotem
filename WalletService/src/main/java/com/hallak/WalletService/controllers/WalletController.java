@@ -2,12 +2,12 @@ package com.hallak.WalletService.controllers;
 
 import com.hallak.WalletService.services.WalletService;
 import com.hallak.shared_libraries.dtos.WalletDTO;
+import com.hallak.shared_libraries.dtos.WalletSingleWatDTO;
+import com.hallak.shared_libraries.dtos.WalletSingleWayDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/")
@@ -22,9 +22,13 @@ public class WalletController {
 
 
     @PostMapping
-    public ResponseEntity<WalletDTO> newWallet(){
+    public ResponseEntity<WalletSingleWayDTO> newWallet(){
         return new ResponseEntity<>(walletService.newWallet(), HttpStatus.CREATED);
+    }
 
+    @GetMapping(value = "/address")
+    public ResponseEntity<WalletDTO> findByAddress(@RequestParam String address){
+        return new ResponseEntity<>(walletService.findByAddress(address), HttpStatus.OK);
 
     }
 
