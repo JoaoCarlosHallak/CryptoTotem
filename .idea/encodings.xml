@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/ConfigService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EurekaService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OfflineSigner/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TransactionFlowService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/WalletService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shared-libraries/src/main/java" charset="UTF-8" />

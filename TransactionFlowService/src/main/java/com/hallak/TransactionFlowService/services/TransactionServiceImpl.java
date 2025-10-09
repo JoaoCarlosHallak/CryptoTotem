@@ -4,6 +4,7 @@ import com.hallak.TransactionFlowService.OPF.WalletServiceClient;
 import com.hallak.TransactionFlowService.dtos.TX;
 import com.hallak.TransactionFlowService.dtos.TXRequest;
 import com.hallak.shared_libraries.dtos.WalletDTO;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,14 @@ public class TransactionServiceImpl implements TransactionService{
         //Devo verificar aqui se a wallet origem tem esse saldo. Isso vai se dar por uma comunicacao sincrona com o WalletManagerService, pois atraves do endereco da carteira, ele vai retornar dados calculados que tem como fonte a blockchain ou ledger service
         // Isso vai ser temporario
         tx.setAmount(txRequest.amount());
+
         tx.setCreatedAt(LocalDateTime.now());
+        tx.setHash(DigestUtils.sha256Hex(tx.getOriginAddress() + tx.getDestinyAddress() + tx.getAmount() + tx.getCreatedAt()));
+        // Agora vamos assinar essa hash com a privateKey em um software offline
+
+
+
+
 
 
     }

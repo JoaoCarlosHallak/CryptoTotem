@@ -9,9 +9,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="OfflineSigner" />
         <module name="ConfigService" />
-        <module name="EurekaService" />
         <module name="shared-libraries" />
+        <module name="EurekaService" />
       </profile>
       <profile name="Annotation profile for TransactionFlowService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -29,6 +30,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ConfigService" options="-parameters" />
       <module name="EurekaService" options="-parameters" />
+      <module name="OfflineSigner" options="-parameters" />
       <module name="TransactionFlowService" options="-parameters" />
       <module name="WalletService" options="-parameters" />
       <module name="shared-libraries" options="-parameters" />

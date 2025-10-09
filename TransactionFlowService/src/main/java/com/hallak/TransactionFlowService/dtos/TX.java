@@ -16,6 +16,7 @@ public class TX {
     private LocalDateTime createdAt;
     private String signature;
     private String hash;
+    private boolean signed;
 
     public TX(String originAddress, String destinyAddress, BigDecimal amount, LocalDateTime createdAt, String signature, String hash) {
         this.id = UUID.randomUUID();
@@ -25,6 +26,7 @@ public class TX {
         this.createdAt = createdAt;
         this.signature = signature;
         this.hash = hash;
+        this.signed = false;
     }
 
     public TX() {

@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/WalletService/pom.xml" />
         <option value="$PROJECT_DIR$/TransactionFlowService/pom.xml" />
         <option value="$PROJECT_DIR$/shared-libraries/pom.xml" />
+        <option value="$PROJECT_DIR$/OfflineSigner/pom.xml" />
       </list>
     </option>
   </component>
