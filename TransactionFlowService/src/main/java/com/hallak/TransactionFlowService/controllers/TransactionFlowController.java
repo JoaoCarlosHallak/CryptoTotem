@@ -2,6 +2,7 @@ package com.hallak.TransactionFlowService.controllers;
 
 import com.hallak.TransactionFlowService.dtos.TX;
 import com.hallak.TransactionFlowService.dtos.TXRequest;
+import com.hallak.TransactionFlowService.dtos.TXResponse;
 import com.hallak.TransactionFlowService.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,8 @@ public class TransactionFlowController {
     }
 
     @PutMapping
-    public ResponseEntity<TX> newTransaction(@RequestBody TXRequest txRequest){
-        return new ResponseEntity<>(transactionService.newTransaction(txRequest), HttpStatus.CREATED);
+    public ResponseEntity<TXResponse> newTransaction(@RequestBody TXRequest txRequest){
+        return new ResponseEntity<>(transactionService.getHashFromTransaction(txRequest), HttpStatus.CREATED);
 
     }
 
