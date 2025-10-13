@@ -53,19 +53,26 @@ public class TransactionServiceImpl implements TransactionService{
             throw new RuntimeException("Please complete all fields -> " + txRequest);
         }
 
-        WalletDTO originWallet = walletServiceClient.findByAddress(txRequest.originAddress());
-        WalletDTO destinyWallet = walletServiceClient.findByAddress(txRequest.destinyAddress());
+        //
         TX tx = new TX();
-        tx.setOriginAddress(originWallet.getAddress());
-        tx.setDestinyAddress(destinyWallet.getAddress());
+        tx.setOriginAddress(txRequest.originAddress());
+        tx.setDestinyAddress(txRequest.destinyAddress());
 
 
-        //Devo verificar aqui se a wallet origem tem esse saldo. Isso vai se dar por uma comunicacao sincrona com o WalletManagerService, pois atraves do endereco da carteira, ele vai retornar dados calculados que tem como fonte a blockchain ou ledger service
-        // Isso vai ser temporario
+        //Devo verificar aqui se a wallet origem tem esse saldo. Isso vai se dar por uma comunicação síncrona com o WalletManagerService, pois atraves do endereco da carteira, ele vai retornar dados calculados que tem como fonte a blockchain ou ledger service
+        // Isso vai ser temporário
         tx.setAmount(txRequest.amount());
-
+//Analisar o motivo pelo qual a hash nao esta batendo
         tx.setCreatedAt(LocalDateTime.now());
+        String generatedHash = makeHash(
+            txRequest.originAddress(),
+            txRequest.destinyAddress(),
+            txRequest.amount(),
+            txRequest.nonce()
+        );
 
+        System.out.println("Hash recebida:  " + txRequest.hash());
+        System.out.println("Hash gerada:    " + generatedHash);
         if (!txRequest.hash().equals(makeHash(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.nonce()))) {
             throw new RuntimeException("This hash doesn't compatible with the transaction");
         }

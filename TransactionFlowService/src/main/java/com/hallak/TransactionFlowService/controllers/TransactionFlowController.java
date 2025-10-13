@@ -4,13 +4,11 @@ import com.hallak.TransactionFlowService.dtos.TX;
 import com.hallak.TransactionFlowService.dtos.TXRequest;
 import com.hallak.TransactionFlowService.dtos.TXResponse;
 import com.hallak.TransactionFlowService.services.TransactionService;
+import com.rabbitmq.client.AMQP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/")
@@ -23,10 +21,15 @@ public class TransactionFlowController {
         this.transactionService = transactionService;
     }
 
-    @PutMapping
-    public ResponseEntity<TXResponse> newTransaction(@RequestBody TXRequest txRequest){
+    @PostMapping
+    public ResponseEntity<TXResponse> getHashFromTransaction(@RequestBody TXRequest txRequest){
         return new ResponseEntity<>(transactionService.getHashFromTransaction(txRequest), HttpStatus.CREATED);
 
+    }
+
+    @PostMapping(value = "newTX")
+    public ResponseEntity<TX> newTransaction(@RequestBody TXRequest txRequest){
+        return new ResponseEntity<>(transactionService.newTransaction(txRequest), HttpStatus.CREATED);
     }
 
 

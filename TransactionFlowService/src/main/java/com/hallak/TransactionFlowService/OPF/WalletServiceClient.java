@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "wallet-service")
 public interface WalletServiceClient {
 
-    @GetMapping(value = "/address")
+    /*@GetMapping(value = "/address")
     WalletDTO findByAddress(@RequestParam String address);
+
+
+     */
 }

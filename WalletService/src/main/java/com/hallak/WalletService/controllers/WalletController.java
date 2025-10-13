@@ -2,7 +2,6 @@ package com.hallak.WalletService.controllers;
 
 import com.hallak.WalletService.services.WalletService;
 import com.hallak.shared_libraries.dtos.WalletDTO;
-import com.hallak.shared_libraries.dtos.WalletSingleWatDTO;
 import com.hallak.shared_libraries.dtos.WalletSingleWayDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +25,11 @@ public class WalletController {
         return new ResponseEntity<>(walletService.newWallet(), HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/address")
+    /*@GetMapping(value = "/address")
     public ResponseEntity<WalletDTO> findByAddress(@RequestParam String address){
         return new ResponseEntity<>(walletService.findByAddress(address), HttpStatus.OK);
 
-    }
+    }*/
 
 
 

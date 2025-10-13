@@ -45,10 +45,10 @@ public class WalletServiceImpl implements WalletService{
 
     }
 
-    @Override
+    /*@Override
     public WalletDTO findByAddress(String address) {
         return modelMapper.map
                 (walletRepository.findByAddress(address).orElseThrow(() -> new RuntimeException("Wallet not found for the given address")),
                         WalletDTO.class);
-    }
+    }*/
 }
