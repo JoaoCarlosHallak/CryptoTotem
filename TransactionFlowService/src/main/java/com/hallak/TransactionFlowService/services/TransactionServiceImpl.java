@@ -62,7 +62,7 @@ public class TransactionServiceImpl implements TransactionService{
         //Devo verificar aqui se a wallet origem tem esse saldo. Isso vai se dar por uma comunicação síncrona com o WalletManagerService, pois atraves do endereco da carteira, ele vai retornar dados calculados que tem como fonte a blockchain ou ledger service
         // Isso vai ser temporário
         tx.setAmount(txRequest.amount());
-//Analisar o motivo pelo qual a hash nao esta batendo
+
         tx.setCreatedAt(LocalDateTime.now());
         String generatedHash = makeHash(
             txRequest.originAddress(),
@@ -71,8 +71,7 @@ public class TransactionServiceImpl implements TransactionService{
             txRequest.nonce()
         );
 
-        System.out.println("Hash recebida:  " + txRequest.hash());
-        System.out.println("Hash gerada:    " + generatedHash);
+
         if (!txRequest.hash().equals(makeHash(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.nonce()))) {
             throw new RuntimeException("This hash doesn't compatible with the transaction");
         }
