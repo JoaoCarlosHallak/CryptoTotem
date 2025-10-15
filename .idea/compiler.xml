@@ -14,7 +14,7 @@
         <module name="shared-libraries" />
         <module name="EurekaService" />
       </profile>
-      <profile name="Annotation profile for TransactionFlowService" enabled="true">
+      <profile name="Annotation profile for NetworkValidationService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -22,6 +22,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
         </processorPath>
         <module name="WalletService" />
+        <module name="NetworkValidationService" />
         <module name="TransactionFlowService" />
       </profile>
     </annotationProcessing>
@@ -30,6 +31,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ConfigService" options="-parameters" />
       <module name="EurekaService" options="-parameters" />
+      <module name="NetworkValidationService" options="-parameters" />
       <module name="OfflineSigner" options="-parameters" />
       <module name="TransactionFlowService" options="-parameters" />
       <module name="WalletService" options="-parameters" />

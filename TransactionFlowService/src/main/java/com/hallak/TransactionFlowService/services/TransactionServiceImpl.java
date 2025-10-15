@@ -64,12 +64,6 @@ public class TransactionServiceImpl implements TransactionService{
         tx.setAmount(txRequest.amount());
 
         tx.setCreatedAt(LocalDateTime.now());
-        String generatedHash = makeHash(
-            txRequest.originAddress(),
-            txRequest.destinyAddress(),
-            txRequest.amount(),
-            txRequest.nonce()
-        );
 
 
         if (!txRequest.hash().equals(makeHash(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.nonce()))) {
