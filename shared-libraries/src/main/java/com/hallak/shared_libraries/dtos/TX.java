@@ -1,7 +1,6 @@
-package com.hallak.TransactionFlowService.dtos;
+package com.hallak.shared_libraries.dtos;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

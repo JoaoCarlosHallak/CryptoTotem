@@ -1,11 +1,14 @@
 package com.hallak.TransactionFlowService.services;
 
 import com.hallak.TransactionFlowService.OPF.WalletServiceClient;
-import com.hallak.TransactionFlowService.dtos.TX;
+import com.hallak.shared_libraries.dtos.TX;
 import com.hallak.TransactionFlowService.dtos.TXRequest;
 import com.hallak.TransactionFlowService.dtos.TXResponse;
-import com.hallak.shared_libraries.dtos.WalletDTO;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,15 @@ import java.util.UUID;
 public class TransactionServiceImpl implements TransactionService{
 
     private final WalletServiceClient walletServiceClient;
+    private final Queue queue;
+    private final RabbitTemplate rabbitTemplate;
+    private static final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     @Autowired
-    public TransactionServiceImpl(WalletServiceClient walletServiceClient) {
+    public TransactionServiceImpl(WalletServiceClient walletServiceClient, Queue queue, RabbitTemplate rabbitTemplate) {
         this.walletServiceClient = walletServiceClient;
+        this.queue = queue;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
@@ -60,7 +68,7 @@ public class TransactionServiceImpl implements TransactionService{
 
 
         //Devo verificar aqui se a wallet origem tem esse saldo. Isso vai se dar por uma comunicação síncrona com o WalletManagerService, pois atraves do endereco da carteira, ele vai retornar dados calculados que tem como fonte a blockchain ou ledger service
-        // Isso vai ser temporário
+        // Isso vai ser temporário Mentira, na verdade a verificacao toda se da pelo NetworkValidationService
         tx.setAmount(txRequest.amount());
 
         tx.setCreatedAt(LocalDateTime.now());
@@ -73,6 +81,8 @@ public class TransactionServiceImpl implements TransactionService{
         tx.setSignature(txRequest.signature());
 
 
+        log.info("Sending TX -> {}", tx);
+        rabbitTemplate.convertAndSend(queue.getName(), tx);
         return tx;
     }
 

@@ -1,10 +1,9 @@
 package com.hallak.TransactionFlowService.controllers;
 
-import com.hallak.TransactionFlowService.dtos.TX;
+import com.hallak.shared_libraries.dtos.TX;
 import com.hallak.TransactionFlowService.dtos.TXRequest;
 import com.hallak.TransactionFlowService.dtos.TXResponse;
 import com.hallak.TransactionFlowService.services.TransactionService;
-import com.rabbitmq.client.AMQP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
