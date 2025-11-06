@@ -15,9 +15,10 @@ public class TX {
     private LocalDateTime createdAt;
     private String signature;
     private String hash;
+    private UUID nonce;
 
 
-    public TX(String originAddress, String destinyAddress, BigDecimal amount, LocalDateTime createdAt, String signature, String hash) {
+    public TX(String originAddress, String destinyAddress, BigDecimal amount, LocalDateTime createdAt, String signature, String hash, UUID nonce) {
         this.id = UUID.randomUUID();
         this.originAddress = originAddress;
         this.destinyAddress = destinyAddress;
@@ -25,6 +26,7 @@ public class TX {
         this.createdAt = createdAt;
         this.signature = signature;
         this.hash = hash;
+        this.nonce = nonce;
     }
 
     public TX() {

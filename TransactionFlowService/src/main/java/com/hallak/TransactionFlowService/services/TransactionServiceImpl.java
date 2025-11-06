@@ -73,12 +73,14 @@ public class TransactionServiceImpl implements TransactionService{
 
         tx.setCreatedAt(LocalDateTime.now());
 
-
+        String generatedHash = makeHash(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.nonce());
+        System.out.println("generated -> " + generatedHash + " | txRequestHash -> " + txRequest.hash() );
         if (!txRequest.hash().equals(makeHash(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.nonce()))) {
             throw new RuntimeException("This hash doesn't compatible with the transaction");
         }
         tx.setHash(txRequest.hash());
         tx.setSignature(txRequest.signature());
+        tx.setNonce(txRequest.nonce());
 
 
         log.info("Sending TX -> {}", tx);
