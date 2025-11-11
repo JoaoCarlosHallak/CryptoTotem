@@ -2,23 +2,19 @@ package com.hallak.WalletService.services;
 
 import com.hallak.WalletService.entities.Wallet;
 import com.hallak.WalletService.repositories.WalletRepository;
-import com.hallak.shared_libraries.dtos.WalletDTO;
 import com.hallak.shared_libraries.dtos.WalletSingleWayDTO;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.util.Base64;
-import java.util.UUID;
 
 @Service
-public class WalletServiceImpl implements WalletService{
+public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository walletRepository;
 
@@ -59,33 +55,12 @@ public class WalletServiceImpl implements WalletService{
             throw new RuntimeException("Failed to generate wallet", e);
         }
     }
+
+
+    @Override
+    public String getPublicKeyByAddress(String address) {
+        return walletRepository.findByAddress(address).orElseThrow(() -> new RuntimeException("Invalid Address")).getPublicKey();
+    }
 }
 
-/*
-    @Override
-    public WalletSingleWayDTO newWallet() {
-        String privateKey;
-        String publicKey;
-        String address;
-
-        do {
-            privateKey = String.valueOf(UUID.randomUUID());
-            publicKey = "public" + DigestUtils.sha256Hex(privateKey);
-            address = "address" + DigestUtils.sha256Hex(publicKey).substring(0, 20);
-        } while (walletRepository.existsByAddress(address) || walletRepository.existsByPublicKey(publicKey));
-
-        LocalDateTime now = LocalDateTime.now();
-
-        walletRepository.save(new Wallet(address, publicKey, now));
-
-        return new WalletSingleWayDTO(address, publicKey, privateKey, now);
-
-    }
-*/
-    /*@Override
-    public WalletDTO findByAddress(String address) {
-        return modelMapper.map
-                (walletRepository.findByAddress(address).orElseThrow(() -> new RuntimeException("Wallet not found for the given address")),
-                        WalletDTO.class);
-    }*/
 

@@ -25,24 +25,7 @@ public class MQConsumer {
         return new Declarables(delivery, exchange, bDelivery);
     }
 
-    @Bean
-    public RabbitListenerContainerFactory<?> rabbitListenerContainerFactory(
-            ConnectionFactory connectionFactory,
-            Jackson2JsonMessageConverter converter) {
 
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(converter);
-        factory.setDefaultRequeueRejected(false);
-        return factory;
-    }
-
-    @Bean
-    public RabbitAdmin rabbitAdmin(ConnectionFactory cf) {
-        RabbitAdmin admin = new RabbitAdmin(cf);
-        admin.setAutoStartup(true);
-        return admin;
-    }
 }
 
 
