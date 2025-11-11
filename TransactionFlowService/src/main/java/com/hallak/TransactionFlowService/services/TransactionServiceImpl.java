@@ -4,7 +4,6 @@ import com.hallak.TransactionFlowService.OPF.WalletServiceClient;
 import com.hallak.shared_libraries.dtos.TX;
 import com.hallak.TransactionFlowService.dtos.TXRequest;
 import com.hallak.TransactionFlowService.dtos.TXResponse;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Queue;
