@@ -1,4 +1,4 @@
-package com.hallak.MempoolService.Async;
+package com.hallak.MempoolService.async;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;

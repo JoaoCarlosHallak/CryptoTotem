@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MQProducer {
 
-    @Bean
+    /*@Bean
     public Queue queueToSaveNewDelivery(@Value("${rabbitmq.queue.tx}") String queueName) {
         return QueueBuilder.durable(queueName).build();
-    }
+    }*/
 
 
 

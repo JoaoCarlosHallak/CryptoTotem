@@ -64,12 +64,8 @@ public class NetworkValidationServiceImpl implements NetworkValidationService {
             return;
         }
 
+        log.info("Sending Valid TX to Mempool -> {}", tx);
         rabbitTemplate.convertAndSend(queue.getName(), tx);
-
-
-
-
-
     }
 
         private boolean verifySignature(String publicKeyBase64, String hash, String signatureBase64){
