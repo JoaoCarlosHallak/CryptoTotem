@@ -4,6 +4,7 @@ import com.hallak.shared_libraries.dtos.TX;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -12,11 +13,12 @@ import java.util.stream.Collectors;
 @Repository
 public class TXRepository {
 
-    private final RedisTemplate<String, TX> txRedis;     // armazena TX completas
-    private final RedisTemplate<String, String> stringRedis; // armazena hashes no SET
+    private final RedisTemplate<String, TX> txRedis;
+    private final RedisTemplate<String, String> stringRedis;
 
     private static final String TX_KEY_PREFIX = "tx:";
     private static final String MEMPOOL_SET = "mempool:hashes";
+    private static final String MEMPOOL_ZSET = "mempool:fees";
 
     public TXRepository(
             RedisTemplate<String, TX> txRedisTemplate,
@@ -26,36 +28,58 @@ public class TXRepository {
         this.stringRedis = redisStringTemplate;
     }
 
-    // Salva TX com TTL e adiciona o hash ao SET da mempool
+    // Salva TX com TTL e cria índices
     public void save(TX tx, long ttlSeconds) {
         String key = TX_KEY_PREFIX + tx.getHash();
 
-        // 1 — salvar TX completa
+        // 1 — salvar TX com TTL
         txRedis.opsForValue().set(key, tx, Duration.ofSeconds(ttlSeconds));
 
-        // 2 — colocar hash no SET
+        // 2 — indexar no SET principal
         stringRedis.opsForSet().add(MEMPOOL_SET, tx.getHash());
+
+        // 3 — indexar no ZSET pelo fee
+        stringRedis.opsForZSet().add(MEMPOOL_ZSET, tx.getHash(), tx.getFee().doubleValue());
     }
 
     // Busca TX pelo hash
     public TX findByHash(String hash) {
-        return txRedis.opsForValue().get(TX_KEY_PREFIX + hash);
+        TX tx = txRedis.opsForValue().get(TX_KEY_PREFIX + hash);
+
+        if (tx == null) {
+            // expirou → remove dos índices
+            stringRedis.opsForSet().remove(MEMPOOL_SET, hash);
+            stringRedis.opsForZSet().remove(MEMPOOL_ZSET, hash);
+        }
+
+        return tx;
+    }
+
+    // Busca a hash com maior fee
+    public String findHighestFeeHash() {
+        Set<String> result = stringRedis.opsForZSet()
+                .reverseRange(MEMPOOL_ZSET, 0, 0);
+
+        if (result == null || result.isEmpty()) return null;
+
+        return result.iterator().next();
     }
 
     // Remove TX completamente
     public void remove(String hash) {
         txRedis.delete(TX_KEY_PREFIX + hash);
         stringRedis.opsForSet().remove(MEMPOOL_SET, hash);
+        stringRedis.opsForZSet().remove(MEMPOOL_ZSET, hash);
     }
 
-    // Pega todas as transações do mempool
+    // Busca todas as TXs
     public List<TX> findAll() {
         Set<String> hashes = stringRedis.opsForSet().members(MEMPOOL_SET);
 
         if (hashes == null) return List.of();
 
         return hashes.stream()
-                .map(this::findByHash)
+                .map(this::findByHash) // auto-limpa expiradas
                 .collect(Collectors.toList());
     }
 }

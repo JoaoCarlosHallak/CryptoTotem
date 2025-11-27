@@ -43,7 +43,7 @@ public class NetworkValidationServiceImpl implements NetworkValidationService {
         // +- Isso
         log.info("Received TX -> {}", tx);
 
-        String generatedHash = makeHashSHA256TX(tx.getOriginAddress(), tx.getDestinyAddress(), tx.getAmount(), tx.getNonce());
+        String generatedHash = makeHashSHA256TX(tx.getOriginAddress(), tx.getDestinyAddress(), tx.getAmount(), tx.getFee(), tx.getNonce());
 
         if (!generatedHash.equals(tx.getHash())) {
             log.info("The hash does not match | generated: {}| tx: {}", generatedHash, tx.getHash());

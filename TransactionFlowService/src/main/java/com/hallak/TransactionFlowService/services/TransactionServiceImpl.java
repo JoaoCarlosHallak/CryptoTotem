@@ -34,12 +34,12 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public TXResponse getHashFromTransaction(TXRequest txRequest) {
-        if (txRequest.originAddress().isBlank() || txRequest.destinyAddress().isBlank() || txRequest.amount() == null){
+        if (txRequest.originAddress().isBlank() || txRequest.destinyAddress().isBlank() || txRequest.amount() == null || txRequest.fee() == null){
             throw new RuntimeException("Please complete all fields ->" + txRequest);
         }
 
         UUID nonce = UUID.randomUUID();
-        String hash = makeHashSHA256TX(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), nonce);
+        String hash = makeHashSHA256TX(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.fee(), nonce);
 
         return new TXResponse(hash, nonce);
         // Agora vamos pegar e assinar essa hash com a privateKey em um ‘software’ ‘offline’. Lembrando de guardar o nonce, garantindo o determinismo da hash.
@@ -55,6 +55,7 @@ public class TransactionServiceImpl implements TransactionService{
         if (txRequest.originAddress().isBlank()
                 || txRequest.destinyAddress().isBlank()
                 || txRequest.amount() == null
+                || txRequest.fee() == null
                 || txRequest.hash().isBlank()
                 || txRequest.signature().isBlank()
                 || txRequest.nonce() == null) {
@@ -62,7 +63,7 @@ public class TransactionServiceImpl implements TransactionService{
         }
 
 
-        String expectedHash = makeHashSHA256TX(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.nonce());
+        String expectedHash = makeHashSHA256TX(txRequest.originAddress(), txRequest.destinyAddress(), txRequest.amount(), txRequest.fee(), txRequest.nonce());
         if (!txRequest.hash().equals(expectedHash)) {
             throw new RuntimeException("This hash doesn't compatible with the transaction. Received: " + txRequest.hash() + "| Expected: " + expectedHash);
         }
@@ -72,6 +73,7 @@ public class TransactionServiceImpl implements TransactionService{
         tx.setOriginAddress(txRequest.originAddress());
         tx.setDestinyAddress(txRequest.destinyAddress());
         tx.setAmount(txRequest.amount());
+        tx.setFee(txRequest.fee());
         tx.setCreatedAt(LocalDateTime.now());
         tx.setHash(txRequest.hash());
         tx.setSignature(txRequest.signature());
