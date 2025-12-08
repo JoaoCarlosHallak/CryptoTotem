@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/NetworkValidationService/pom.xml" />
         <option value="$PROJECT_DIR$/MempoolService/pom.xml" />
         <option value="$PROJECT_DIR$/MinerService/pom.xml" />
+        <option value="$PROJECT_DIR$/BlockchainService/pom.xml" />
       </list>
     </option>
   </component>
