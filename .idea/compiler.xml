@@ -26,6 +26,15 @@
         <module name="NetworkValidationService" />
         <module name="TransactionFlowService" />
       </profile>
+      <profile name="Annotation profile for MinerService" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="MinerService" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
@@ -33,6 +42,7 @@
       <module name="ConfigService" options="-parameters" />
       <module name="EurekaService" options="-parameters" />
       <module name="MempoolService" options="-parameters" />
+      <module name="MinerService" options="-parameters" />
       <module name="NetworkValidationService" options="-parameters" />
       <module name="OfflineSigner" options="-parameters" />
       <module name="TransactionFlowService" options="-parameters" />
