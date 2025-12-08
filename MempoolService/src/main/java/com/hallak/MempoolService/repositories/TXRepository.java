@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,6 @@ public class TXRepository {
         TX tx = txRedis.opsForValue().get(TX_KEY_PREFIX + hash);
 
         if (tx == null) {
-            // expirou → remove dos índices
             stringRedis.opsForSet().remove(MEMPOOL_SET, hash);
             stringRedis.opsForZSet().remove(MEMPOOL_ZSET, hash);
         }
@@ -80,6 +80,18 @@ public class TXRepository {
 
         return hashes.stream()
                 .map(this::findByHash) // auto-limpa expiradas
+                .collect(Collectors.toList());
+    }
+
+    public List<TX> findTopNByFee(int limit) {
+        Set<String> hashes = stringRedis.opsForZSet()
+                .reverseRange(MEMPOOL_ZSET, 0, limit - 1);
+
+        if (hashes == null) return List.of();
+
+        return hashes.stream()
+                .map(this::findByHash) // já remove expiradas automaticamente
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 }

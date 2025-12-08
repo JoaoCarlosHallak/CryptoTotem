@@ -36,6 +36,11 @@
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
         <dependency>
+          <groupId>org.modelmapper</groupId>
+          <artifactId>modelmapper</artifactId>
+          <version>3.2.4</version>
+        </dependency>
+        <dependency>
             <groupId>com.hallak</groupId>
             <artifactId>shared-libraries</artifactId>
             <version>0.0.1-SNAPSHOT</version>
